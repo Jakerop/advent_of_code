@@ -32,7 +32,7 @@ if __name__ == "__main__":
         section_overlaps = 0
         for line in f:
             elf_sections_txt = line.strip("\n").split(",")
-            elf_sections = [None, None]
+            elf_sections = [None for x in elf_sections_txt]
             for i, section in enumerate(elf_sections_txt):
                 elf_sections[i] = convert_range(section)
             section_subsets += count_subset(elf_sections)
