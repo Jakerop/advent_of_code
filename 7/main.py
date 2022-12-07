@@ -1,4 +1,5 @@
 import os
+import time
 
 file_dir, _ = os.path.split(__file__)
 file_path = os.path.join(file_dir, "input.txt")
@@ -12,17 +13,6 @@ class Node():
         self.node_type = node_type
         self.size = 0
         self.update_size(size)
-
-    def __eq__(self, __o: object) -> bool:
-        if __o.__class__ is not self.__class__:
-            return False
-        return __o.name == self.name and __o.children == self.children
-
-    def get_size(self, size_limit=-1):
-        size = self.size
-        for child in self.children:
-            size += child.get_size(size_limit)
-        return size
 
     def get_subdirs_of_limit_size(self, size_limit, result_list):
         size = self.size
@@ -52,6 +42,7 @@ class Node():
         except AttributeError:
             return
 
+
 def parse_input(file_name):
     current_dir = Node("root", node_type="dir")
     with open(file_name) as f:
@@ -76,10 +67,6 @@ def parse_input(file_name):
     return current_dir.get_root()
 
 
-def find_smallest_possible_dir(nodes):
-    root = nodes.get_root()
-
-
 if __name__ == "__main__":
     dir_smaller_than_100000 = list()
     a = parse_input(file_path)
@@ -88,5 +75,5 @@ if __name__ == "__main__":
     for dir_size in dir_smaller_than_100000:
         dir_sum += dir_size
     print(f"dir sum = {dir_sum}")
-    needed_space = 30000000-(70000000-a.size)
+    needed_space = 30000000-(70000000-a.get_root().size)
     print(f"smallest_dir = {a.get_smallest_possible_subdir(needed_space)[1]}")
