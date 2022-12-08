@@ -42,7 +42,7 @@ def check_right(trees, tree_height, steps_taken, x_pos, y_pos):
 
 if __name__ == "__main__":
     trees = parse_file(file_path)
-    vissable_count = 0
+    visible_count = 0
     best_scenic_score = 0
     for row in range(len(trees)):
         for col in range(len(trees[row])):
@@ -52,9 +52,9 @@ if __name__ == "__main__":
             result_left = check_left(trees, tree_height, 0, col, row)
             result_right = check_right(trees, tree_height, 0, col, row)
             if any((result_top[0], result_bottom[0], result_left[0], result_right[0])):
-                vissable_count += 1
+                visible_count += 1
             scenic_score = result_top[1]*result_bottom[1]*result_left[1]*result_right[1]
             if scenic_score > best_scenic_score:
                 best_scenic_score = scenic_score
-    print(f"visible trees: {vissable_count}")
+    print(f"visible trees: {visible_count}")
     print(f"best scenic score: {best_scenic_score}")
