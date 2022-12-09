@@ -1,4 +1,5 @@
 import os
+from math import copysign
 
 
 def get_move_gen():
@@ -11,30 +12,30 @@ def get_move_gen():
 
 def _adjust_tail_moving_right(head_pos, tail_pos):
     if head_pos[0] > tail_pos[0]+1:
-        tail_pos[0] = tail_pos[0]+1
+        tail_pos[0] += 1
         if head_pos[1] != tail_pos[1]:
-            tail_pos[1] += (head_pos[1]-tail_pos[1])/abs(head_pos[1]-tail_pos[1])
+            tail_pos[1] += copysign(1, head_pos[1]-tail_pos[1])
 
 
 def _adjust_tail_moving_left(head_pos, tail_pos):
     if head_pos[0] < tail_pos[0]-1:
-        tail_pos[0] = tail_pos[0]-1
+        tail_pos[0] -= 1
         if head_pos[1] != tail_pos[1]:
-            tail_pos[1] += (head_pos[1]-tail_pos[1])/abs(head_pos[1]-tail_pos[1])
+            tail_pos[1] += copysign(1, head_pos[1]-tail_pos[1])
 
 
 def _adjust_tail_moving_up(head_pos, tail_pos):
     if head_pos[1] > tail_pos[1]+1:
-        tail_pos[1] = tail_pos[1]+1
+        tail_pos[1] += 1
         if head_pos[0] != tail_pos[0]:
-            tail_pos[0] += (head_pos[0]-tail_pos[0])/abs(head_pos[0]-tail_pos[0])
+            tail_pos[0] += copysign(1, head_pos[0]-tail_pos[0])
 
 
 def _adjust_tail_moving_down(head_pos, tail_pos):
     if head_pos[1] < tail_pos[1]-1:
-        tail_pos[1] = tail_pos[1]-1
+        tail_pos[1] -= 1
         if head_pos[0] != tail_pos[0]:
-            tail_pos[0] += (head_pos[0]-tail_pos[0])/abs(head_pos[0]-tail_pos[0])
+            tail_pos[0] += copysign(1, head_pos[0]-tail_pos[0])
 
 
 def _move_head(move, knot_positions):
