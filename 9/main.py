@@ -15,6 +15,7 @@ def _adjust_tail_moving_right(head_pos, tail_pos):
         tail_pos[0] += 1
         if head_pos[1] != tail_pos[1]:
             tail_pos[1] += copysign(1, head_pos[1]-tail_pos[1])
+            # hade (head_pos[1]-tail_pos[1])/abs(head_pos[1]-tail_pos[1]) innan jag såg patriks
 
 
 def _adjust_tail_moving_left(head_pos, tail_pos):

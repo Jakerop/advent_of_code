@@ -13,6 +13,7 @@ def get_cmd_gen():
 def add_char_screen(screen:str, cycle, X):
     # -1%40 = 39 and fmod(-1,40) = -1
     sprite_position = fmod(X, 40)
+    # sprite_position = X%40
     if sprite_position-1 <= (cycle-1)%40 <= sprite_position+1:
         screen += "#"
     else:
@@ -58,4 +59,4 @@ if __name__ == "__main__":
     screen = "\n".join([screen[x:x+40] for x in range(0, len(screen), 40)])
     pretty_screen = " "+" ".join([screen[x:x+1] for x in range(0, len(screen), 1)])
     print(signal_strength)
-    print(pretty_screen)
+    print(screen)
