@@ -1,6 +1,7 @@
 import os
-from math import copysign, inf
-# from matplotlib import pyplot as plt
+from math import copysign
+from copy import deepcopy
+from matplotlib import pyplot as plt
 
 FILENAME = "input.txt"
 
@@ -45,31 +46,30 @@ def move_sand(coords, walls, bottom, part):
         return move_sand(down_right, walls, bottom, part)
     return coords
 
-def add_sand(dropfrom, walls, bottom, part):
-    return move_sand(dropfrom, walls, bottom, part)
-
 def fill_room(walls:set, part):
     dropfrom = (500, 0)
-    bottom = (inf, max(walls, key=lambda y : y[1])[1]+1)
+    bottom = (None, max(walls, key=lambda y : y[1])[1]+1)
     top = dropfrom
     if part == 2:
         bottom = (bottom[0], bottom[1]+1)
-    # plt.figure()
-    # plt.scatter([x[0] for x in walls], [dropfrom[1]-y[1] for y in walls], c="b")
     i = 0
-    while bottom[1] > (new_sand := add_sand(dropfrom, walls, bottom, part))[1] > top[1]:
-        # plt.scatter([new_sand[0]], [dropfrom[1]-new_sand[1]], c="r")
+    while bottom[1] > (new_sand := move_sand(dropfrom, walls, bottom, part))[1] > top[1]:
         i += 1
         walls.add(new_sand)
     if new_sand == top:
-        # plt.scatter([new_sand[0]], [dropfrom[1]-new_sand[1]], c="r")
-        i+=1
+        i += 1
         walls.add(new_sand)
-    # plt.show()
     return i
 
+def plotter(walls, sandwalls):
+    plt.figure()
+    plt.scatter([x[0] for x in walls], [500-y[1] for y in walls], c="b")
+    plt.scatter([x[0] for x in sandwalls], [500-y[1] for y in sandwalls], c="r")
+    plt.show()
 
 if __name__ == "__main__":
     for part in [1, 2]:
         walls = mark_walls()
+        original_wall = deepcopy(walls)
         print(fill_room(walls, part))
+        plotter(walls, original_wall)
